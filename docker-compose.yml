@@ -1,7 +1,7 @@
 services:
 
   #  mysql:
-  #    image: 'mysql:8.0.35'
+  #    image: 'mysql:8.0.41'
   #    environment:
   #      - 'MYSQL_DATABASE=sample'
   #      - 'MYSQL_PASSWORD=1234'
@@ -10,7 +10,7 @@ services:
   #    ports:
   #      - '33062:3306'
   #    volumes:
-  #      - mysql_data:/var/lib/mysql
+  #      - mysql_data_2:/var/lib/mysql
 
   postgres:
     image: 'postgres:16.4-alpine'
@@ -22,16 +22,16 @@ services:
     ports:
       - '54322:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_2:/var/lib/postgresql/data
 
   redis:
     image: redis:7.4-alpine
     ports:
       - "63792:6379"
     volumes:
-      - redis_data:/data
+      - redis_data_2:/data
 
 volumes:
-  postgres_data:
-  #  mysql_data:
-  redis_data:
+  postgres_data_2:
+  #  mysql_data_2:
+  redis_data_2:
