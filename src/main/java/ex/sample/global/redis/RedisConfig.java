@@ -41,11 +41,11 @@ public class RedisConfig {
 
         // Serializer 설정
         redisTemplate.setKeySerializer(RedisSerializer.string());
-        redisTemplate.setValueSerializer(RedisSerializer.json());
+        redisTemplate.setValueSerializer(RedisSerializer.string());
 
         // Hash Serializer 설정
         redisTemplate.setHashKeySerializer(RedisSerializer.string());
-        redisTemplate.setHashValueSerializer(RedisSerializer.json());
+        redisTemplate.setHashValueSerializer(RedisSerializer.string());
 
         return redisTemplate;
     }

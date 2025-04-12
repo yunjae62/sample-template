@@ -1,9 +1,17 @@
 package ex.sample.global.security;
 
-import ex.sample.global.exception.ExceptionHandlerFilter;
-import ex.sample.global.jwt.JwtAuthFilter;
-import ex.sample.global.jwt.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.security.filter.AuthFilter;
+import ex.sample.global.security.filter.ExceptionFilter;
+import ex.sample.global.security.filter.LoginFilter;
+import ex.sample.global.security.filter.LogoutFilter;
+import ex.sample.global.security.filter.RefreshFilter;
+import ex.sample.global.security.handler.RefreshSuccessHandler;
+import ex.sample.global.security.jwt.JwtConfig;
+import ex.sample.global.security.provider.AccessTokenAuthenticationProvider;
+import ex.sample.global.security.provider.RefreshTokenAuthenticationProvider;
+import ex.sample.global.security.provider.UsernamePasswordAuthenticationProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -11,19 +19,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -31,9 +38,15 @@ import org.springframework.web.cors.CorsConfiguration;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    public static final String SIGNUP_URL = "/users/signup";
+    public static final String LOGIN_URL = "/users/login";
+    public static final String LOGOUT_URL = "/users/logout";
+    public static final String REFRESH_URL = "/users/refresh";
+
     private static final List<String> ALLOWED_ORIGINS = List.of(
         "http://localhost:3000"
     );
+
     private static final List<String> ALLOWED_METHODS = List.of(
         HttpMethod.GET.name(),
         HttpMethod.POST.name(),
@@ -43,9 +56,9 @@ public class WebSecurityConfig {
         HttpMethod.OPTIONS.name()
     );
 
-    private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
-    private final UserDetailsService userDetailsService;
+    private final AccessTokenAuthenticationProvider accessTokenAuthProvider;
+    private final RefreshTokenAuthenticationProvider refreshTokenAuthProvider;
+    private final UsernamePasswordAuthenticationProvider usernamePasswordAuthProvider;
 
     /**
      * 비밀번호 암호화 설정 (BCrypt)
@@ -56,22 +69,51 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(refreshTokenAuthProvider, accessTokenAuthProvider, usernamePasswordAuthProvider);
     }
 
     @Bean
-    public ExceptionHandlerFilter exceptionHandlerFilter() {
-        return new ExceptionHandlerFilter();
+    public RefreshFilter refreshFilter(RefreshSuccessHandler refreshSuccessHandler) {
+        return new RefreshFilter(refreshSuccessHandler, authenticationManager());
     }
 
     @Bean
-    public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(jwtUtil, redisUtil, userDetailsService);
+    public AuthFilter authFilter() {
+        return new AuthFilter(authenticationManager());
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public LoginFilter loginFilter(ObjectMapper objectMapper, AuthenticationSuccessHandler loginSuccessHandler) {
+        LoginFilter filter = new LoginFilter(objectMapper, loginSuccessHandler);
+        filter.setAuthenticationManager(authenticationManager());
+        return filter;
+    }
+
+    @Bean
+    public LogoutFilter logoutFilter(RedisUtil redisUtil) {
+        return new LogoutFilter(redisUtil);
+    }
+
+    @Bean
+    public ExceptionFilter exceptionFilter(ObjectMapper objectMapper) {
+        return new ExceptionFilter(objectMapper);
+    }
+
+    @Bean
+    public AuthFilter jwtAuthFilter() {
+        return new AuthFilter(authenticationManager());
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+        HttpSecurity http,
+        LoginFilter loginFilter,
+        LogoutFilter logoutFilter,
+        AuthFilter authFilter,
+        RefreshFilter refreshFilter,
+        ExceptionFilter exceptionFilter
+    ) throws Exception {
 
         // CSRF 비활성화 설정
         http.csrf(AbstractHttpConfigurer::disable);
@@ -83,7 +125,11 @@ public class WebSecurityConfig {
         http.sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // Filter 순서 설정
-        settingFilterOrder(http);
+        http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(logoutFilter, LoginFilter.class);
+        http.addFilterBefore(authFilter, LogoutFilter.class);
+        http.addFilterBefore(refreshFilter, AuthFilter.class);
+        http.addFilterBefore(exceptionFilter, RefreshFilter.class);
 
         // 요청 URL 접근 설정
         settingRequestAuthorization(http);
@@ -100,17 +146,9 @@ public class WebSecurityConfig {
             config.setAllowedOrigins(ALLOWED_ORIGINS);
             config.setAllowedMethods(ALLOWED_METHODS);
             config.setAllowedHeaders(List.of("")); // preflight 요청에 대한 응답 헤더 허용
-            config.setExposedHeaders(List.of(JwtUtil.REFRESH_TOKEN_HEADER)); // 브라우저가 접근할 수 있는 응답 헤더 허용
+            config.setExposedHeaders(List.of(JwtConfig.REFRESH_TOKEN_HEADER)); // 브라우저가 접근할 수 있는 응답 헤더 허용
             return config;
         });
-    }
-
-    /**
-     * Filter 설정
-     */
-    private void settingFilterOrder(HttpSecurity http) {
-        http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(exceptionHandlerFilter(), LogoutFilter.class);
     }
 
     /**
@@ -125,6 +163,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
                 // Sample 도메인
                 .requestMatchers("/samples/**").permitAll()
+                // 인증
+                .requestMatchers(HttpMethod.POST, SIGNUP_URL, REFRESH_URL).permitAll()
                 // 그 외
                 .anyRequest().authenticated()
         );

@@ -1,10 +1,6 @@
 package ex.sample.global.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,19 +18,6 @@ public class CacheConfig {
 
     private final ObjectMapper objectMapper;
     private final RedisConnectionFactory redisConnectionFactory;
-
-    @PostConstruct
-    void setup() {
-        objectMapper.registerModule(new JavaTimeModule()); // LocalDateTime 파싱
-        objectMapper.activateDefaultTyping(typeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
-    }
-
-    private PolymorphicTypeValidator typeValidator() {
-        return BasicPolymorphicTypeValidator
-            .builder()
-            .allowIfSubType(Object.class)
-            .build();
-    }
 
     @Bean
     public RedisCacheManager cacheManager() {

@@ -3,8 +3,6 @@ spring:
     name: sample
   profiles:
     default: dev
-  lifecycle:
-    timeout-per-shutdown-phase: 10s
 
 server:
   shutdown: graceful  # 애플리케이션 종료 시 정상 종료
