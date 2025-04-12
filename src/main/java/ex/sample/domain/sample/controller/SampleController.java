@@ -1,16 +1,15 @@
-package ex.sample.domain.sample.presentation;
+package ex.sample.domain.sample.controller;
 
-import ex.sample.domain.sample.application.SampleCommandService;
-import ex.sample.domain.sample.application.SampleQueryService;
 import ex.sample.domain.sample.dto.request.CreateSampleReq;
 import ex.sample.domain.sample.dto.response.CreateSampleRes;
 import ex.sample.domain.sample.dto.response.GetSampleRes;
+import ex.sample.domain.sample.service.SampleCommandService;
+import ex.sample.domain.sample.service.SampleQueryService;
+import ex.sample.global.response.CommonPageRes;
 import ex.sample.global.response.CommonRes;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
@@ -34,7 +33,7 @@ public class SampleController {
      * 샘플 단건 조회
      */
     @GetMapping("/{id}")
-    public CommonRes<GetSampleRes> getSample(@PathVariable("id") UUID id) {
+    public CommonRes<GetSampleRes> getSample(@PathVariable("id") Long id) {
         GetSampleRes response = sampleQueryService.getSample(id);
         return CommonRes.success(response);
     }
@@ -43,10 +42,10 @@ public class SampleController {
      * 샘플 리스트 조회
      */
     @GetMapping
-    public CommonRes<Slice<GetSampleRes>> getSample(
-        @PageableDefault(sort = "createdAt", direction = Direction.DESC) Pageable pageable
+    public CommonRes<CommonPageRes<GetSampleRes>> getSample(
+        @PageableDefault(size = 20, sort = "createdAt", direction = Direction.DESC) Pageable pageable
     ) {
-        Slice<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
+        CommonPageRes<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
         return CommonRes.success(response);
     }
 

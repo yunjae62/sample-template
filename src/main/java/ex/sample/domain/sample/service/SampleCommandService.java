@@ -1,4 +1,4 @@
-package ex.sample.domain.sample.application;
+package ex.sample.domain.sample.service;
 
 import ex.sample.domain.sample.domain.Sample;
 import ex.sample.domain.sample.dto.request.CreateSampleReq;

@@ -1,4 +1,4 @@
-package ex.sample.domain.user;
+package ex.sample.domain.user.controller;
 
 import ex.sample.domain.user.dto.request.UserSignupReq;
 import ex.sample.domain.user.dto.request.UserWithdrawalReq;
