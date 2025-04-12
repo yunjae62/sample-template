@@ -2,6 +2,7 @@ package ex.sample.global.exception;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
+import ex.sample.global.response.InvalidInputRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.validation.FieldError;

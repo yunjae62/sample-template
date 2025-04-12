@@ -1,4 +1,4 @@
-package ex.sample.global.exception;
+package ex.sample.global.response;
 
 public record InvalidInputRes(
     String field,

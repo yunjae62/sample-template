@@ -2,6 +2,7 @@ package ex.sample.global.exception;
 
 import ex.sample.global.response.CommonEmptyRes;
 import ex.sample.global.response.CommonRes;
+import ex.sample.global.response.InvalidInputRes;
 import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
