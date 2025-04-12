@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByEmail(username)
             .orElseThrow(() -> new GlobalException(ResponseCode.USER_NOT_FOUND));
 
         return new UserDetailsImpl(user);
