@@ -26,20 +26,33 @@ repositories {
 
 dependencies {
 
-    // jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    // security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // web
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // docker compose support
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 //    // mysql
 //    runtimeOnly 'com.mysql:mysql-connector-j'
@@ -47,16 +60,9 @@ dependencies {
     // postgresql
     runtimeOnly 'org.postgresql:postgresql'
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
     // mapStruct
     implementation 'org.mapstruct:mapstruct:1.6.3'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-
-    // validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
@@ -65,15 +71,6 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-
-    // QueryDSL
-    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
-    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-    // docker compose support
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
 
     /* Test*/
