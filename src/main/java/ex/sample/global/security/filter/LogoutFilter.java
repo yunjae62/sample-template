@@ -1,6 +1,6 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.redis.RedisUtil2;
+import ex.sample.global.redis.RedisUtil;
 import ex.sample.global.security.WebSecurityConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class LogoutFilter extends OncePerRequestFilter {
 
-    private final RedisUtil2 redisUtil;
+    private final RedisUtil redisUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {

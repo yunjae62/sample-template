@@ -1,12 +1,12 @@
 package ex.sample.global.security.provider;
 
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.jwt.JwtStatus;
-import ex.sample.global.redis.RedisUtil2;
+import ex.sample.global.redis.RedisUtil;
 import ex.sample.global.response.ResponseCode;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtClaimsExtractor;
+import ex.sample.global.security.jwt.JwtStatus;
 import ex.sample.global.security.jwt.JwtValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RefreshTokenAuthenticationProvider implements AuthenticationProvider {
 
-    private final RedisUtil2 redisUtil;
+    private final RedisUtil redisUtil;
     private final JwtValidator jwtValidator;
     private final JwtClaimsExtractor jwtClaimsExtractor;
     private final UserDetailsService userDetailsService;

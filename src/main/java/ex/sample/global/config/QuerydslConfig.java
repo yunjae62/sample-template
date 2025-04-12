@@ -1,4 +1,4 @@
-package ex.sample.global.querydsl;
+package ex.sample.global.config;
 
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;

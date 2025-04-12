@@ -1,6 +1,5 @@
 package ex.sample.global.security.jwt;
 
-import ex.sample.global.jwt.JwtStatus;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;

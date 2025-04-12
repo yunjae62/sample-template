@@ -1,9 +1,9 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.jwt.JwtUtil;
 import ex.sample.global.security.WebSecurityConfig;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
 import ex.sample.global.security.handler.RefreshSuccessHandler;
+import ex.sample.global.security.jwt.JwtConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ public class RefreshFilter extends OncePerRequestFilter {
         HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
-        String authenticationHeader = request.getHeader(JwtUtil.REFRESH_TOKEN_HEADER);
+        String authenticationHeader = request.getHeader(JwtConfig.REFRESH_TOKEN_HEADER);
         log.info("Refresh-Token : {}", authenticationHeader);
 
         // 토큰이 없으면 인증 처리 없이 다음 필터로 전달

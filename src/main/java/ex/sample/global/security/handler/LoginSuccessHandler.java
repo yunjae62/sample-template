@@ -1,7 +1,7 @@
 package ex.sample.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.redis.RedisUtil2;
+import ex.sample.global.redis.RedisUtil;
 import ex.sample.global.response.CommonRes;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final RedisUtil2 redisUtil;
+    private final RedisUtil redisUtil;
     private final ObjectMapper objectMapper;
     private final JwtTokenFactory jwtTokenFactory;
 

@@ -1,16 +1,14 @@
 package ex.sample.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.jwt.JwtAuthFilter;
-import ex.sample.global.jwt.JwtUtil;
 import ex.sample.global.redis.RedisUtil;
-import ex.sample.global.redis.RedisUtil2;
 import ex.sample.global.security.filter.AuthFilter;
 import ex.sample.global.security.filter.ExceptionFilter;
 import ex.sample.global.security.filter.LoginFilter;
 import ex.sample.global.security.filter.LogoutFilter;
 import ex.sample.global.security.filter.RefreshFilter;
 import ex.sample.global.security.handler.RefreshSuccessHandler;
+import ex.sample.global.security.jwt.JwtConfig;
 import ex.sample.global.security.provider.AccessTokenAuthenticationProvider;
 import ex.sample.global.security.provider.RefreshTokenAuthenticationProvider;
 import ex.sample.global.security.provider.UsernamePasswordAuthenticationProvider;
@@ -28,7 +26,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,9 +42,11 @@ public class WebSecurityConfig {
     public static final String LOGIN_URL = "/users/login";
     public static final String LOGOUT_URL = "/users/logout";
     public static final String REFRESH_URL = "/users/refresh";
+
     private static final List<String> ALLOWED_ORIGINS = List.of(
         "http://localhost:3000"
     );
+
     private static final List<String> ALLOWED_METHODS = List.of(
         HttpMethod.GET.name(),
         HttpMethod.POST.name(),
@@ -56,12 +55,10 @@ public class WebSecurityConfig {
         HttpMethod.DELETE.name(),
         HttpMethod.OPTIONS.name()
     );
-    private final RefreshTokenAuthenticationProvider refreshTokenAuthProvider;
+
     private final AccessTokenAuthenticationProvider accessTokenAuthProvider;
+    private final RefreshTokenAuthenticationProvider refreshTokenAuthProvider;
     private final UsernamePasswordAuthenticationProvider usernamePasswordAuthProvider;
-    private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
-    private final UserDetailsService userDetailsService;
 
     /**
      * 비밀번호 암호화 설정 (BCrypt)
@@ -94,7 +91,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public LogoutFilter logoutFilter(RedisUtil2 redisUtil) {
+    public LogoutFilter logoutFilter(RedisUtil redisUtil) {
         return new LogoutFilter(redisUtil);
     }
 
@@ -104,8 +101,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(jwtUtil, redisUtil, userDetailsService);
+    public AuthFilter jwtAuthFilter() {
+        return new AuthFilter(authenticationManager());
     }
 
     @Bean
@@ -149,7 +146,7 @@ public class WebSecurityConfig {
             config.setAllowedOrigins(ALLOWED_ORIGINS);
             config.setAllowedMethods(ALLOWED_METHODS);
             config.setAllowedHeaders(List.of("")); // preflight 요청에 대한 응답 헤더 허용
-            config.setExposedHeaders(List.of(JwtUtil.REFRESH_TOKEN_HEADER)); // 브라우저가 접근할 수 있는 응답 헤더 허용
+            config.setExposedHeaders(List.of(JwtConfig.REFRESH_TOKEN_HEADER)); // 브라우저가 접근할 수 있는 응답 헤더 허용
             return config;
         });
     }
