@@ -1,6 +1,6 @@
 package ex.sample.global.exception;
 
-import ex.sample.global.common.response.ErrorCase;
+import ex.sample.global.response.ErrorCase;
 import lombok.Getter;
 
 /**

@@ -5,7 +5,7 @@ import ex.sample.domain.sample.application.SampleQueryService;
 import ex.sample.domain.sample.dto.request.CreateSampleReq;
 import ex.sample.domain.sample.dto.response.CreateSampleRes;
 import ex.sample.domain.sample.dto.response.GetSampleRes;
-import ex.sample.global.common.response.CommonResponse;
+import ex.sample.global.response.CommonResponse;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

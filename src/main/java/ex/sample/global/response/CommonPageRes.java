@@ -1,4 +1,4 @@
-package ex.sample.global.common.response;
+package ex.sample.global.response;
 
 import java.util.List;
 import org.springframework.data.domain.Page;

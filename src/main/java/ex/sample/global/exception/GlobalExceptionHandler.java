@@ -1,8 +1,8 @@
 package ex.sample.global.exception;
 
-import ex.sample.global.common.response.CommonEmptyRes;
-import ex.sample.global.common.response.CommonResponse;
-import ex.sample.global.common.response.ErrorCase;
+import ex.sample.global.response.CommonEmptyRes;
+import ex.sample.global.response.CommonResponse;
+import ex.sample.global.response.ErrorCase;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

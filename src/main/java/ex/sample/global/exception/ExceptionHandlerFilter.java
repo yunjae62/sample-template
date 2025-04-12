@@ -1,8 +1,8 @@
 package ex.sample.global.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.common.response.CommonResponse;
-import ex.sample.global.common.response.ErrorCase;
+import ex.sample.global.response.CommonResponse;
+import ex.sample.global.response.ErrorCase;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
