@@ -1,8 +1,8 @@
 package ex.sample.domain.user.service;
 
+import ex.sample.domain.user.domain.User;
 import ex.sample.domain.user.dto.request.UserSignupReq;
 import ex.sample.domain.user.dto.request.UserWithdrawalReq;
-import ex.sample.domain.user.model.User;
 import ex.sample.domain.user.repository.UserRepository;
 import ex.sample.global.exception.GlobalException;
 import ex.sample.global.response.CommonEmptyRes;

@@ -1,4 +1,4 @@
-package ex.sample.domain.user.model;
+package ex.sample.domain.user.domain;
 
 import ex.sample.domain.model.SoftDeleteEntity;
 import jakarta.persistence.Column;

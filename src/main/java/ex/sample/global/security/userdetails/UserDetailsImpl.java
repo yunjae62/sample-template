@@ -1,7 +1,7 @@
 package ex.sample.global.security.userdetails;
 
-import ex.sample.domain.user.model.User;
-import ex.sample.domain.user.model.UserRole;
+import ex.sample.domain.user.domain.User;
+import ex.sample.domain.user.domain.UserRole;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;

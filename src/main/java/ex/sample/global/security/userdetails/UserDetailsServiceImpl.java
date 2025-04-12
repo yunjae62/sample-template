@@ -1,6 +1,6 @@
 package ex.sample.global.security.userdetails;
 
-import ex.sample.domain.user.model.User;
+import ex.sample.domain.user.domain.User;
 import ex.sample.domain.user.repository.UserRepository;
 import ex.sample.global.exception.GlobalException;
 import ex.sample.global.response.ResponseCode;

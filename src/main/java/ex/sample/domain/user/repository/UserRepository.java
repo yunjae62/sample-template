@@ -1,6 +1,6 @@
 package ex.sample.domain.user.repository;
 
-import ex.sample.domain.user.model.User;
+import ex.sample.domain.user.domain.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
