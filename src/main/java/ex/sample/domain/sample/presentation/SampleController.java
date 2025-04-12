@@ -5,7 +5,7 @@ import ex.sample.domain.sample.application.SampleQueryService;
 import ex.sample.domain.sample.dto.request.CreateSampleReq;
 import ex.sample.domain.sample.dto.response.CreateSampleRes;
 import ex.sample.domain.sample.dto.response.GetSampleRes;
-import ex.sample.global.response.CommonResponse;
+import ex.sample.global.response.CommonRes;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,28 +34,28 @@ public class SampleController {
      * 샘플 단건 조회
      */
     @GetMapping("/{id}")
-    public CommonResponse<GetSampleRes> getSample(@PathVariable("id") UUID id) {
+    public CommonRes<GetSampleRes> getSample(@PathVariable("id") UUID id) {
         GetSampleRes response = sampleQueryService.getSample(id);
-        return CommonResponse.success(response);
+        return CommonRes.success(response);
     }
 
     /**
      * 샘플 리스트 조회
      */
     @GetMapping
-    public CommonResponse<Slice<GetSampleRes>> getSample(
+    public CommonRes<Slice<GetSampleRes>> getSample(
         @PageableDefault(sort = "createdAt", direction = Direction.DESC) Pageable pageable
     ) {
         Slice<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
-        return CommonResponse.success(response);
+        return CommonRes.success(response);
     }
 
     /**
      * 샘플 생성
      */
     @PostMapping
-    public CommonResponse<CreateSampleRes> createSample(@Validated @RequestBody CreateSampleReq request) {
+    public CommonRes<CreateSampleRes> createSample(@Validated @RequestBody CreateSampleReq request) {
         CreateSampleRes response = sampleCommandService.createSample(request);
-        return CommonResponse.success(response);
+        return CommonRes.success(response);
     }
 }

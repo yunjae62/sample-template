@@ -1,7 +1,7 @@
 package ex.sample.global.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.response.CommonResponse;
+import ex.sample.global.response.CommonRes;
 import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,7 +38,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name()); // charset : UTF8
 
         try {
-            String responseJson = objectMapper.writeValueAsString(CommonResponse.error(responseCode));
+            String responseJson = objectMapper.writeValueAsString(CommonRes.error(responseCode));
             response.getWriter().write(responseJson);
         } catch (IOException e) {
             log.error("예외 필터 직렬화 오류", e);
