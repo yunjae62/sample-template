@@ -1,6 +1,6 @@
 package ex.sample.global.exception;
 
-import ex.sample.global.response.ErrorCase;
+import ex.sample.global.response.ResponseCode;
 import lombok.Getter;
 
 /**
@@ -9,10 +9,10 @@ import lombok.Getter;
 @Getter
 public class GlobalException extends RuntimeException {
 
-    private final ErrorCase errorCase;
+    private final ResponseCode responseCode;
 
-    public GlobalException(ErrorCase errorCase) {
-        super(errorCase.getMessage());
-        this.errorCase = errorCase;
+    public GlobalException(ResponseCode responseCode) {
+        super(responseCode.getMessage());
+        this.responseCode = responseCode;
     }
 }

@@ -2,7 +2,7 @@ package ex.sample.global.jwt;
 
 import ex.sample.global.exception.GlobalException;
 import ex.sample.global.redis.RedisUtil;
-import ex.sample.global.response.ErrorCase;
+import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -51,7 +51,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         switch (accessTokenStatus) {
             case VALID -> authenticateLoginUser(accessToken);
             case EXPIRED -> authenticateWithRefreshToken(request, response);
-            case INVALID -> throw new GlobalException(ErrorCase.INVALID_TOKEN);
+            case INVALID -> throw new GlobalException(ResponseCode.INVALID_TOKEN);
         }
 
         filterChain.doFilter(request, response);
@@ -66,7 +66,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // 로그아웃 여부 체크
         if (redisUtil.isUserLogout(nickname)) {
-            throw new GlobalException(ErrorCase.LOGIN_REQUIRED);
+            throw new GlobalException(ResponseCode.LOGIN_REQUIRED);
         }
 
         setAuthentication(accessToken); // 인증 처리
@@ -77,15 +77,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String refreshToken = jwtUtil.getRefreshTokenFromCookies(request.getCookies());
 
         if (refreshToken == null) {
-            throw new GlobalException(ErrorCase.LOGIN_REQUIRED);
+            throw new GlobalException(ResponseCode.LOGIN_REQUIRED);
         }
 
         JwtStatus refreshTokenStatus = jwtUtil.validateToken(refreshToken);
 
         switch (refreshTokenStatus) {
             case VALID -> setAuthWithRenewAccessToken(response, refreshToken);
-            case EXPIRED -> throw new GlobalException(ErrorCase.LOGIN_REQUIRED);
-            case INVALID -> throw new GlobalException(ErrorCase.INVALID_TOKEN);
+            case EXPIRED -> throw new GlobalException(ResponseCode.LOGIN_REQUIRED);
+            case INVALID -> throw new GlobalException(ResponseCode.INVALID_TOKEN);
         }
     }
 
@@ -126,7 +126,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (isRefreshTokenNotSame(refreshToken, refreshTokenInRedis)) {
             log.error("[서로 다른 리프레쉬 토큰] 닉네임 : {}", nickname);
             redisUtil.setUserLogout(nickname);
-            throw new GlobalException(ErrorCase.LOGIN_REQUIRED);
+            throw new GlobalException(ResponseCode.LOGIN_REQUIRED);
         }
     }
 

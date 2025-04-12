@@ -2,7 +2,7 @@ package ex.sample.global.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ex.sample.global.response.CommonResponse;
-import ex.sample.global.response.ErrorCase;
+import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,18 +27,18 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (GlobalException e) {
-            setErrorResponse(response, e.getErrorCase());
+            setErrorResponse(response, e.getResponseCode());
         }
     }
 
-    private void setErrorResponse(HttpServletResponse response, ErrorCase errorCase) {
+    private void setErrorResponse(HttpServletResponse response, ResponseCode responseCode) {
 
-        response.setStatus(errorCase.getHttpStatus().value()); // HttpStatus 설정
+        response.setStatus(responseCode.getHttpStatus().value()); // HttpStatus 설정
         response.setContentType(MediaType.APPLICATION_JSON_VALUE); // Content-Type : application/json
         response.setCharacterEncoding(StandardCharsets.UTF_8.name()); // charset : UTF8
 
         try {
-            String responseJson = objectMapper.writeValueAsString(CommonResponse.error(errorCase));
+            String responseJson = objectMapper.writeValueAsString(CommonResponse.error(responseCode));
             response.getWriter().write(responseJson);
         } catch (IOException e) {
             log.error("예외 필터 직렬화 오류", e);

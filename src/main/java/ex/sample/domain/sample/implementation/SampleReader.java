@@ -4,7 +4,7 @@ import ex.sample.domain.sample.domain.Sample;
 import ex.sample.domain.sample.domain.SampleRepository;
 import ex.sample.global.annotation.Implementation;
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.response.ErrorCase;
+import ex.sample.global.response.ResponseCode;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class SampleReader {
 
     public Sample read(UUID id) {
         return sampleRepository.findById(id)
-            .orElseThrow(() -> new GlobalException(ErrorCase.NOT_FOUND));
+            .orElseThrow(() -> new GlobalException(ResponseCode.NOT_FOUND));
     }
 
     public Slice<Sample> readAll(Pageable pageable) {
