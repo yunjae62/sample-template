@@ -1,7 +1,7 @@
 package ex.sample.domain.sample.domain;
 
-import ex.sample.domain.model.BaseEntity;
 import ex.sample.domain.model.Money;
+import ex.sample.domain.model.SoftDeleteEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLRestriction("deleted_at IS NULL")
 @SQLDelete(sql = "UPDATE samples SET deleted_at = NOW() WHERE id = ?")
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 엔티티는 기본 생성자가 필수라서 접근 제어자 최소화
-public class Sample extends BaseEntity {
+public class Sample extends SoftDeleteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
