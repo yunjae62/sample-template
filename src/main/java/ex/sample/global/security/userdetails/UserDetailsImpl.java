@@ -1,4 +1,4 @@
-package ex.sample.global.security;
+package ex.sample.global.security.userdetails;
 
 import ex.sample.domain.user.model.User;
 import ex.sample.domain.user.model.UserRole;
