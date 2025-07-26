@@ -27,15 +27,23 @@ public class Money {
     }
 
     public Money add(Money other) {
+        checkNull(other);
         return new Money(amount.add(other.amount));
     }
 
     public Money subtract(Money other) {
+        checkNull(other);
         return new Money(amount.subtract(other.amount));
     }
 
-    public Money multiply(BigInteger multiplier) {
-        return new Money(amount.multiply(multiplier));
+    public Money multiply(long multiplier) {
+        return new Money(amount.multiply(BigInteger.valueOf(multiplier)));
+    }
+
+    private void checkNull(Money money) {
+        if (money == null) {
+            throw new NullPointerException("금액은 널이 될 수 없습니다.");
+        }
     }
 
     @Override
