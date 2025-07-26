@@ -2,6 +2,7 @@ package ex.sample.domain.sample.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import java.math.BigDecimal;
 
 public record CreateSampleReq(
 
@@ -9,7 +10,7 @@ public record CreateSampleReq(
     String name,
 
     @NotNull(message = "금액은 필수값입니다.")
-    Long money
+    BigDecimal money
 ) {
 
 }
