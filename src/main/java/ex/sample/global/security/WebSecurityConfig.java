@@ -1,7 +1,7 @@
 package ex.sample.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.inmemory.redis.RedisUtil;
+import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.security.filter.AuthFilter;
 import ex.sample.global.security.filter.ExceptionFilter;
 import ex.sample.global.security.filter.LoginFilter;
@@ -91,8 +91,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public LogoutFilter logoutFilter(RedisUtil redisUtil) {
-        return new LogoutFilter(redisUtil);
+    public LogoutFilter logoutFilter(InMemoryStore inMemoryStore) {
+        return new LogoutFilter(inMemoryStore);
     }
 
     @Bean

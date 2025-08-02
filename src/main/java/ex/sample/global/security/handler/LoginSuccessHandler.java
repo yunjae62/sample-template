@@ -1,7 +1,7 @@
 package ex.sample.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.inmemory.redis.RedisUtil;
+import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.CommonRes;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final RedisUtil redisUtil;
     private final ObjectMapper objectMapper;
+    private final InMemoryStore inMemoryStore;
     private final JwtTokenFactory jwtTokenFactory;
 
     @Override
@@ -54,6 +54,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addHeader(JwtConfig.ACCESS_TOKEN_HEADER, JwtBearerUtils.addPrefix(accessToken));
         response.addHeader(JwtConfig.REFRESH_TOKEN_HEADER, JwtBearerUtils.addPrefix(refreshToken));
 
-        redisUtil.set(name, refreshToken, JwtTokenFactory.REFRESH_TOKEN_TTL);
+        inMemoryStore.put(name, accessToken, JwtTokenFactory.REFRESH_TOKEN_TTL);
     }
 }

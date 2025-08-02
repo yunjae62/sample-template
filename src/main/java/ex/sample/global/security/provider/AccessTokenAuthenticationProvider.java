@@ -1,7 +1,7 @@
 package ex.sample.global.security.provider;
 
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.inmemory.redis.RedisUtil;
+import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.ResponseCode;
 import ex.sample.global.security.authentication.AccessTokenAuthentication;
 import ex.sample.global.security.jwt.JwtBearerUtils;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AccessTokenAuthenticationProvider implements AuthenticationProvider {
 
-    private final RedisUtil redisUtil;
+    private final InMemoryStore inMemoryStore;
     private final JwtValidator jwtValidator;
     private final JwtClaimsExtractor jwtClaimsExtractor;
     private final UserDetailsService userDetailsService;
@@ -58,7 +58,7 @@ public class AccessTokenAuthenticationProvider implements AuthenticationProvider
     }
 
     private void validateLogout(String subject) {
-        redisUtil.get(subject, String.class)
+        inMemoryStore.get(subject, String.class)
             .orElseThrow(() -> new GlobalException(ResponseCode.LOGIN_REQUIRED));
     }
 
