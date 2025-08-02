@@ -1,4 +1,4 @@
-package ex.sample.global.redis;
+package ex.sample.global.inmemory.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

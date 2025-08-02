@@ -1,6 +1,6 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.inmemory.redis.RedisUtil;
 import ex.sample.global.security.WebSecurityConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;

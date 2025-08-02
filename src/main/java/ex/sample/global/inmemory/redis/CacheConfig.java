@@ -1,4 +1,4 @@
-package ex.sample.global.redis;
+package ex.sample.global.inmemory.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;

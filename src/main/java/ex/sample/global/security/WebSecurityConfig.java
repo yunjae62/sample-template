@@ -1,7 +1,7 @@
 package ex.sample.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.inmemory.redis.RedisUtil;
 import ex.sample.global.security.filter.AuthFilter;
 import ex.sample.global.security.filter.ExceptionFilter;
 import ex.sample.global.security.filter.LoginFilter;

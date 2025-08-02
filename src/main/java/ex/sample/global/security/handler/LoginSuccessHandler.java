@@ -1,7 +1,7 @@
 package ex.sample.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.inmemory.redis.RedisUtil;
 import ex.sample.global.response.CommonRes;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;

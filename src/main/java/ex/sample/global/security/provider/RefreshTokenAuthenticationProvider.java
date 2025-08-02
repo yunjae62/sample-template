@@ -1,7 +1,7 @@
 package ex.sample.global.security.provider;
 
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.inmemory.redis.RedisUtil;
 import ex.sample.global.response.ResponseCode;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
 import ex.sample.global.security.jwt.JwtBearerUtils;
