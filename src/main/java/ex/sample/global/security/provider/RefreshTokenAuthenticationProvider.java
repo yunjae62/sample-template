@@ -1,7 +1,7 @@
 package ex.sample.global.security.provider;
 
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.redis.RedisUtil;
+import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.ResponseCode;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
 import ex.sample.global.security.jwt.JwtBearerUtils;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RefreshTokenAuthenticationProvider implements AuthenticationProvider {
 
-    private final RedisUtil redisUtil;
+    private final InMemoryStore inMemoryStore;
     private final JwtValidator jwtValidator;
     private final JwtClaimsExtractor jwtClaimsExtractor;
     private final UserDetailsService userDetailsService;
@@ -57,7 +57,7 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
     }
 
     private void validateSameRefreshToken(String email, String token) {
-        String tokenInRedis = redisUtil.get(email, String.class)
+        String tokenInRedis = inMemoryStore.get(email, String.class)
             .orElseThrow(() -> new GlobalException(ResponseCode.LOGIN_REQUIRED));
 
         if (!tokenInRedis.equals(token)) { // 다른 리프레쉬 토큰
