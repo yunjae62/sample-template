@@ -2,7 +2,7 @@ package ex.sample.global.exception;
 
 import ex.sample.global.response.ApiResponse;
 import ex.sample.global.response.EmptyResponse;
-import ex.sample.global.response.InvalidInputRes;
+import ex.sample.global.response.InvalidInputResponse;
 import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -62,16 +62,16 @@ public class GlobalExceptionHandler {
      * Validation 라이브러리로 RequestBody 입력 파라미터 검증 오류 발생에 대한 핸들러
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResponse<List<InvalidInputRes>> handlerValidationException(MethodArgumentNotValidException e) {
+    public ApiResponse<List<InvalidInputResponse>> handlerValidationException(MethodArgumentNotValidException e) {
         response.setStatus(ResponseCode.INVALID_INPUT.getHttpStatus().value()); // HttpStatus 설정
 
         // 잘못된 입력 에러들을 DTO 변환
-        List<InvalidInputRes> invalidInputResList = changeFieldErrorToDto(e);
+        List<InvalidInputResponse> invalidInputResponseList = changeFieldErrorToDto(e);
 
-        return ApiResponse.error(ResponseCode.INVALID_INPUT, invalidInputResList); // 공통 응답 양식 반환
+        return ApiResponse.error(ResponseCode.INVALID_INPUT, invalidInputResponseList); // 공통 응답 양식 반환
     }
 
-    private List<InvalidInputRes> changeFieldErrorToDto(MethodArgumentNotValidException e) {
+    private List<InvalidInputResponse> changeFieldErrorToDto(MethodArgumentNotValidException e) {
         return e.getBindingResult()
             .getFieldErrors()
             .stream()
