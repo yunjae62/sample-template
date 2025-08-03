@@ -1,4 +1,4 @@
-package ex.sample.global.datasource;
+package ex.sample.global.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
