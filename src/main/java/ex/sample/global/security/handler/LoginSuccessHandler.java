@@ -1,11 +1,11 @@
 package ex.sample.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.ApiResponse;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;
 import ex.sample.global.security.jwt.JwtTokenFactory;
+import ex.sample.infra.inmemory.InMemoryStore;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;

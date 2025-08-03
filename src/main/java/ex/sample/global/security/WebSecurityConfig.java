@@ -1,7 +1,6 @@
 package ex.sample.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.security.filter.AuthFilter;
 import ex.sample.global.security.filter.ExceptionFilter;
 import ex.sample.global.security.filter.LoginFilter;
@@ -12,6 +11,7 @@ import ex.sample.global.security.jwt.JwtConfig;
 import ex.sample.global.security.provider.AccessTokenAuthenticationProvider;
 import ex.sample.global.security.provider.RefreshTokenAuthenticationProvider;
 import ex.sample.global.security.provider.UsernamePasswordAuthenticationProvider;
+import ex.sample.infra.inmemory.InMemoryStore;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

@@ -1,4 +1,4 @@
-package ex.sample.global.swagger;
+package ex.sample.global.config;
 
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;

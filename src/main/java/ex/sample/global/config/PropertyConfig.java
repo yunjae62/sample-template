@@ -1,4 +1,4 @@
-package ex.sample.global.property;
+package ex.sample.global.config;
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;

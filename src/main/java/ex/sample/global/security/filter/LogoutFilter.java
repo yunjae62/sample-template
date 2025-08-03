@@ -1,7 +1,7 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.security.WebSecurityConfig;
+import ex.sample.infra.inmemory.InMemoryStore;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
