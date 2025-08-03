@@ -1,8 +1,8 @@
 package ex.sample.domain.sample.controller;
 
-import ex.sample.domain.sample.dto.request.CreateSampleReq;
-import ex.sample.domain.sample.dto.response.CreateSampleRes;
-import ex.sample.domain.sample.dto.response.GetSampleRes;
+import ex.sample.domain.sample.dto.request.CreateSampleRequest;
+import ex.sample.domain.sample.dto.response.CreateSampleResponse;
+import ex.sample.domain.sample.dto.response.GetSampleResponse;
 import ex.sample.domain.sample.service.SampleCommandService;
 import ex.sample.domain.sample.service.SampleQueryService;
 import ex.sample.global.response.ApiResponse;
@@ -33,8 +33,8 @@ public class SampleController {
      * 샘플 단건 조회
      */
     @GetMapping("/{id}")
-    public ApiResponse<GetSampleRes> getSample(@PathVariable("id") Long id) {
-        GetSampleRes response = sampleQueryService.getSample(id);
+    public ApiResponse<GetSampleResponse> getSample(@PathVariable("id") Long id) {
+        GetSampleResponse response = sampleQueryService.getSample(id);
         return ApiResponse.success(response);
     }
 
@@ -42,10 +42,10 @@ public class SampleController {
      * 샘플 리스트 조회
      */
     @GetMapping
-    public ApiResponse<PageResponse<GetSampleRes>> getSample(
+    public ApiResponse<PageResponse<GetSampleResponse>> getSample(
         @PageableDefault(size = 20, sort = "createdAt", direction = Direction.DESC) Pageable pageable
     ) {
-        PageResponse<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
+        PageResponse<GetSampleResponse> response = sampleQueryService.getSampleList(pageable);
         return ApiResponse.success(response);
     }
 
@@ -53,8 +53,8 @@ public class SampleController {
      * 샘플 생성
      */
     @PostMapping
-    public ApiResponse<CreateSampleRes> createSample(@Validated @RequestBody CreateSampleReq request) {
-        CreateSampleRes response = sampleCommandService.createSample(request);
+    public ApiResponse<CreateSampleResponse> createSample(@Validated @RequestBody CreateSampleRequest request) {
+        CreateSampleResponse response = sampleCommandService.createSample(request);
         return ApiResponse.success(response);
     }
 }

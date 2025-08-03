@@ -1,7 +1,7 @@
 package ex.sample.domain.user.controller;
 
-import ex.sample.domain.user.dto.request.UserSignupReq;
-import ex.sample.domain.user.dto.request.UserWithdrawalReq;
+import ex.sample.domain.user.dto.request.UserSignupRequest;
+import ex.sample.domain.user.dto.request.UserWithdrawalRequest;
 import ex.sample.domain.user.service.UserAuthService;
 import ex.sample.global.response.ApiResponse;
 import ex.sample.global.response.EmptyResponse;
@@ -26,7 +26,7 @@ public class UserAuthController {
 
     @PostMapping("/signup")
     public ApiResponse<EmptyResponse> signup(
-        @Valid @RequestBody UserSignupReq request
+        @Valid @RequestBody UserSignupRequest request
     ) {
         EmptyResponse response = userAuthService.signup(request);
         return ApiResponse.success(response);
@@ -35,7 +35,7 @@ public class UserAuthController {
     @DeleteMapping
     public ApiResponse<EmptyResponse> delete(
         @AuthenticationPrincipal UserDetails userDetails,
-        @Valid @RequestBody UserWithdrawalReq request
+        @Valid @RequestBody UserWithdrawalRequest request
     ) {
         EmptyResponse response = userAuthService.deleteUser(userDetails, request);
         return ApiResponse.success(response);

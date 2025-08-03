@@ -1,6 +1,6 @@
 package ex.sample.domain.sample.dto.response;
 
-public record CreateSampleRes(
+public record CreateSampleResponse(
     Long id,
     String name,
     Long money
