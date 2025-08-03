@@ -5,7 +5,6 @@ import ex.sample.domain.sample.dto.response.CreateSampleResponse;
 import ex.sample.domain.sample.dto.response.GetSampleResponse;
 import ex.sample.domain.sample.service.SampleCommandService;
 import ex.sample.domain.sample.service.SampleQueryService;
-import ex.sample.global.response.ApiResponse;
 import ex.sample.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,28 +32,25 @@ public class SampleController {
      * 샘플 단건 조회
      */
     @GetMapping("/{id}")
-    public ApiResponse<GetSampleResponse> getSample(@PathVariable("id") Long id) {
-        GetSampleResponse response = sampleQueryService.getSample(id);
-        return ApiResponse.success(response);
+    public GetSampleResponse getSample(@PathVariable("id") Long id) {
+        return sampleQueryService.getSample(id);
     }
 
     /**
      * 샘플 리스트 조회
      */
     @GetMapping
-    public ApiResponse<PageResponse<GetSampleResponse>> getSample(
+    public PageResponse<GetSampleResponse> getSample(
         @PageableDefault(size = 20, sort = "createdAt", direction = Direction.DESC) Pageable pageable
     ) {
-        PageResponse<GetSampleResponse> response = sampleQueryService.getSampleList(pageable);
-        return ApiResponse.success(response);
+        return sampleQueryService.getSampleList(pageable);
     }
 
     /**
      * 샘플 생성
      */
     @PostMapping
-    public ApiResponse<CreateSampleResponse> createSample(@Validated @RequestBody CreateSampleRequest request) {
-        CreateSampleResponse response = sampleCommandService.createSample(request);
-        return ApiResponse.success(response);
+    public CreateSampleResponse createSample(@Validated @RequestBody CreateSampleRequest request) {
+        return sampleCommandService.createSample(request);
     }
 }
