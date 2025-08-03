@@ -1,7 +1,7 @@
 package ex.sample.global.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ex.sample.global.response.CommonRes;
+import ex.sample.global.response.ApiResponse;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtConfig;
 import ex.sample.global.security.jwt.JwtTokenFactory;
@@ -29,7 +29,7 @@ public class RefreshSuccessHandler {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE); // JSON 설정
         response.setCharacterEncoding(StandardCharsets.UTF_8.name()); // UTF8 설정하여 한글 표시
 
-        String result = objectMapper.writeValueAsString(CommonRes.success()); // JSON to String 변환
+        String result = objectMapper.writeValueAsString(ApiResponse.success()); // JSON to String 변환
         response.getWriter().write(result);
     }
 

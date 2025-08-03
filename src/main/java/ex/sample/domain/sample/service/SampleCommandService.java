@@ -1,8 +1,8 @@
 package ex.sample.domain.sample.service;
 
 import ex.sample.domain.sample.domain.Sample;
-import ex.sample.domain.sample.dto.request.CreateSampleReq;
-import ex.sample.domain.sample.dto.response.CreateSampleRes;
+import ex.sample.domain.sample.dto.request.CreateSampleRequest;
+import ex.sample.domain.sample.dto.response.CreateSampleResponse;
 import ex.sample.domain.sample.implementation.SampleSaver;
 import ex.sample.domain.sample.mapper.SampleMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class SampleCommandService {
      * 샘플 생성
      */
     @Transactional
-    public CreateSampleRes createSample(CreateSampleReq request) {
+    public CreateSampleResponse createSample(CreateSampleRequest request) {
         Sample sample = sampleSaver.create(request.name(), request.money());
         return sampleMapper.toCreateSampleRes(sample);
     }

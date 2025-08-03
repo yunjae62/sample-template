@@ -1,11 +1,11 @@
 package ex.sample.domain.user.service;
 
 import ex.sample.domain.user.domain.User;
-import ex.sample.domain.user.dto.request.UserSignupReq;
-import ex.sample.domain.user.dto.request.UserWithdrawalReq;
+import ex.sample.domain.user.dto.request.UserSignupRequest;
+import ex.sample.domain.user.dto.request.UserWithdrawalRequest;
 import ex.sample.domain.user.repository.UserRepository;
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.response.CommonEmptyRes;
+import ex.sample.global.response.EmptyResponse;
 import ex.sample.global.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class UserAuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public CommonEmptyRes signup(UserSignupReq request) {
+    public EmptyResponse signup(UserSignupRequest request) {
         // 닉네임이 존재하는지 검증
         validateNickname(request.nickname());
 
@@ -35,7 +35,7 @@ public class UserAuthService {
 
         userRepository.save(user);
 
-        return new CommonEmptyRes();
+        return new EmptyResponse();
     }
 
     private void validateNickname(String nickname) {
@@ -55,7 +55,7 @@ public class UserAuthService {
     }
 
     @Transactional
-    public CommonEmptyRes deleteUser(UserDetails userDetails, UserWithdrawalReq request) {
+    public EmptyResponse deleteUser(UserDetails userDetails, UserWithdrawalRequest request) {
         String email = userDetails.getUsername();
 
         User user = userRepository.findByEmail(email)
@@ -67,6 +67,6 @@ public class UserAuthService {
 
         userRepository.deleteByEmail(userDetails.getUsername());
 
-        return new CommonEmptyRes();
+        return new EmptyResponse();
     }
 }

@@ -1,6 +1,6 @@
 package ex.sample.global.exception;
 
-import ex.sample.global.response.InvalidInputRes;
+import ex.sample.global.response.InvalidInputResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants.ComponentModel;
@@ -11,5 +11,5 @@ public interface InvalidInputMapper {
 
     // FieldError 의 defaultMessage -> message 이름 변경
     @Mapping(source = "defaultMessage", target = "message")
-    InvalidInputRes toInvalidInputResponseDto(FieldError fieldError);
+    InvalidInputResponse toInvalidInputResponseDto(FieldError fieldError);
 }

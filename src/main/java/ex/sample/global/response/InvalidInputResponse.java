@@ -1,6 +1,6 @@
 package ex.sample.global.response;
 
-public record InvalidInputRes(
+public record InvalidInputResponse(
     String field,
     String message
 ) {

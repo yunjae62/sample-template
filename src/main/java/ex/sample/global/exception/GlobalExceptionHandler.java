@@ -1,8 +1,8 @@
 package ex.sample.global.exception;
 
-import ex.sample.global.response.CommonEmptyRes;
-import ex.sample.global.response.CommonRes;
-import ex.sample.global.response.InvalidInputRes;
+import ex.sample.global.response.ApiResponse;
+import ex.sample.global.response.EmptyResponse;
+import ex.sample.global.response.InvalidInputResponse;
 import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -34,10 +34,10 @@ public class GlobalExceptionHandler {
      * Business 오류 발생에 대한 핸들러
      */
     @ExceptionHandler(GlobalException.class)
-    public CommonRes<CommonEmptyRes> handleGlobalException(GlobalException e) {
+    public ApiResponse<EmptyResponse> handleGlobalException(GlobalException e) {
         response.setStatus(e.getResponseCode().getHttpStatus().value()); // HttpStatus 설정
 
-        return CommonRes.error(e.getResponseCode()); // 공통 응답 양식 반환
+        return ApiResponse.error(e.getResponseCode()); // 공통 응답 양식 반환
     }
 
     /**
@@ -52,26 +52,26 @@ public class GlobalExceptionHandler {
         MissingPathVariableException.class,
         MissingServletRequestParameterException.class
     })
-    public CommonRes<CommonEmptyRes> handleGlobalException(Exception e) {
+    public ApiResponse<EmptyResponse> handleGlobalException(Exception e) {
         response.setStatus(ResponseCode.INVALID_INPUT.getHttpStatus().value()); // HttpStatus 설정
 
-        return CommonRes.error(ResponseCode.INVALID_INPUT); // 공통 응답 양식 반환
+        return ApiResponse.error(ResponseCode.INVALID_INPUT); // 공통 응답 양식 반환
     }
 
     /**
      * Validation 라이브러리로 RequestBody 입력 파라미터 검증 오류 발생에 대한 핸들러
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonRes<List<InvalidInputRes>> handlerValidationException(MethodArgumentNotValidException e) {
+    public ApiResponse<List<InvalidInputResponse>> handlerValidationException(MethodArgumentNotValidException e) {
         response.setStatus(ResponseCode.INVALID_INPUT.getHttpStatus().value()); // HttpStatus 설정
 
         // 잘못된 입력 에러들을 DTO 변환
-        List<InvalidInputRes> invalidInputResList = changeFieldErrorToDto(e);
+        List<InvalidInputResponse> invalidInputResponseList = changeFieldErrorToDto(e);
 
-        return CommonRes.error(ResponseCode.INVALID_INPUT, invalidInputResList); // 공통 응답 양식 반환
+        return ApiResponse.error(ResponseCode.INVALID_INPUT, invalidInputResponseList); // 공통 응답 양식 반환
     }
 
-    private List<InvalidInputRes> changeFieldErrorToDto(MethodArgumentNotValidException e) {
+    private List<InvalidInputResponse> changeFieldErrorToDto(MethodArgumentNotValidException e) {
         return e.getBindingResult()
             .getFieldErrors()
             .stream()
@@ -83,10 +83,10 @@ public class GlobalExceptionHandler {
      * 예상치 못한 에러 발생에 대한 핸들러
      */
     @ExceptionHandler({Exception.class, RuntimeException.class})
-    public CommonRes<CommonEmptyRes> handleException(Exception e) {
+    public ApiResponse<EmptyResponse> handleException(Exception e) {
         log.error("예상치 못한 에러 발생", e);
         response.setStatus(ResponseCode.SYSTEM_ERROR.getHttpStatus().value()); // HttpStatus 설정
 
-        return CommonRes.error(ResponseCode.SYSTEM_ERROR); // 공통 응답 양식 반환
+        return ApiResponse.error(ResponseCode.SYSTEM_ERROR); // 공통 응답 양식 반환
     }
 }
