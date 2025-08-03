@@ -4,7 +4,7 @@ import ex.sample.domain.sample.domain.Sample;
 import ex.sample.domain.sample.dto.response.GetSampleRes;
 import ex.sample.domain.sample.implementation.SampleReader;
 import ex.sample.domain.sample.mapper.SampleMapper;
-import ex.sample.global.response.CommonPageRes;
+import ex.sample.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,10 +33,10 @@ public class SampleQueryService {
      * 샘플 리스트 조회
      */
     @Transactional(readOnly = true)
-    public CommonPageRes<GetSampleRes> getSampleList(Pageable pageable) {
+    public PageResponse<GetSampleRes> getSampleList(Pageable pageable) {
         Page<GetSampleRes> pages = sampleReader.readAll(pageable)
             .map(sampleMapper::toGetSampleRes);
 
-        return CommonPageRes.from(pages);
+        return PageResponse.from(pages);
     }
 }

@@ -6,7 +6,7 @@ import ex.sample.domain.sample.dto.response.GetSampleRes;
 import ex.sample.domain.sample.service.SampleCommandService;
 import ex.sample.domain.sample.service.SampleQueryService;
 import ex.sample.global.response.ApiResponse;
-import ex.sample.global.response.CommonPageRes;
+import ex.sample.global.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -42,10 +42,10 @@ public class SampleController {
      * 샘플 리스트 조회
      */
     @GetMapping
-    public ApiResponse<CommonPageRes<GetSampleRes>> getSample(
+    public ApiResponse<PageResponse<GetSampleRes>> getSample(
         @PageableDefault(size = 20, sort = "createdAt", direction = Direction.DESC) Pageable pageable
     ) {
-        CommonPageRes<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
+        PageResponse<GetSampleRes> response = sampleQueryService.getSampleList(pageable);
         return ApiResponse.success(response);
     }
 

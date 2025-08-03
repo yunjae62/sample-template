@@ -6,13 +6,13 @@ import org.springframework.data.domain.Page;
 /**
  * 공통 페이지 응답 객체
  */
-public record CommonPageRes<T>(
+public record PageResponse<T>(
     List<T> content,
     PageMeta meta
 ) {
 
-    public static <T> CommonPageRes<T> from(Page<T> page) {
-        return new CommonPageRes<>(page.getContent(), PageMeta.from(page));
+    public static <T> PageResponse<T> from(Page<T> page) {
+        return new PageResponse<>(page.getContent(), PageMeta.from(page));
     }
 
     public record PageMeta(
