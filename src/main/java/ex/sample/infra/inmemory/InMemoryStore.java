@@ -1,10 +1,10 @@
-package ex.sample.global.inmemory;
+package ex.sample.infra.inmemory;
 
 import java.time.Duration;
 import java.util.Optional;
 
 public interface InMemoryStore {
-    
+
     <T> void put(String key, T value);
 
     <T> void put(String key, T value, Duration ttl);

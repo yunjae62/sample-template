@@ -1,4 +1,4 @@
-package ex.sample.global.inmemory.redis;
+package ex.sample.infra.inmemory.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

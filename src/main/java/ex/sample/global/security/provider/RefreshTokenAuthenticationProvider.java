@@ -1,13 +1,13 @@
 package ex.sample.global.security.provider;
 
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.ResponseCode;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
 import ex.sample.global.security.jwt.JwtBearerUtils;
 import ex.sample.global.security.jwt.JwtClaimsExtractor;
 import ex.sample.global.security.jwt.JwtStatus;
 import ex.sample.global.security.jwt.JwtValidator;
+import ex.sample.infra.inmemory.InMemoryStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

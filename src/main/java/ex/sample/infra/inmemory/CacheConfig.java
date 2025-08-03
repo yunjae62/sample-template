@@ -1,4 +1,4 @@
-package ex.sample.global.inmemory;
+package ex.sample.infra.inmemory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;

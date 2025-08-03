@@ -1,10 +1,10 @@
-package ex.sample.global.inmemory.redis;
+package ex.sample.infra.inmemory.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ex.sample.global.exception.GlobalException;
-import ex.sample.global.inmemory.InMemoryStore;
 import ex.sample.global.response.ResponseCode;
+import ex.sample.infra.inmemory.InMemoryStore;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.Optional;
