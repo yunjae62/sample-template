@@ -2,7 +2,6 @@ package ex.sample.infra.inmemory.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -13,14 +12,10 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
-@RequiredArgsConstructor
 public class RedisCacheConfig {
 
-    private final ObjectMapper objectMapper;
-    private final RedisConnectionFactory redisConnectionFactory;
-
     @Bean
-    public RedisCacheManager redisCacheManager() {
+    public RedisCacheManager redisCacheManager(ObjectMapper objectMapper, RedisConnectionFactory redisConnectionFactory) {
 
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
