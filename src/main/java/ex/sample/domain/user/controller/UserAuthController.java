@@ -3,8 +3,8 @@ package ex.sample.domain.user.controller;
 import ex.sample.domain.user.dto.request.UserSignupReq;
 import ex.sample.domain.user.dto.request.UserWithdrawalReq;
 import ex.sample.domain.user.service.UserAuthService;
+import ex.sample.global.response.ApiResponse;
 import ex.sample.global.response.CommonEmptyRes;
-import ex.sample.global.response.CommonRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +25,19 @@ public class UserAuthController {
     private final UserAuthService userAuthService;
 
     @PostMapping("/signup")
-    public CommonRes<CommonEmptyRes> signup(
+    public ApiResponse<CommonEmptyRes> signup(
         @Valid @RequestBody UserSignupReq request
     ) {
         CommonEmptyRes response = userAuthService.signup(request);
-        return CommonRes.success(response);
+        return ApiResponse.success(response);
     }
 
     @DeleteMapping
-    public CommonRes<CommonEmptyRes> delete(
+    public ApiResponse<CommonEmptyRes> delete(
         @AuthenticationPrincipal UserDetails userDetails,
         @Valid @RequestBody UserWithdrawalReq request
     ) {
         CommonEmptyRes response = userAuthService.deleteUser(userDetails, request);
-        return CommonRes.success(response);
+        return ApiResponse.success(response);
     }
 }
