@@ -16,8 +16,8 @@ public record ApiResponse<T>(
     /**
      * data 필드에 값을 넣을 때 사용하는 메서드 - data 필드가 필요 없는 경우
      */
-    public static ApiResponse<CommonEmptyRes> success() {
-        return new ApiResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMessage(), new CommonEmptyRes());
+    public static ApiResponse<EmptyResponse> success() {
+        return new ApiResponse<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMessage(), new EmptyResponse());
     }
 
     /**
@@ -30,8 +30,8 @@ public record ApiResponse<T>(
     /**
      * 에러 발생 시 특정 에러에 맞는 응답하는 메서드 - data 필드가 필요 없는 경우
      */
-    public static ApiResponse<CommonEmptyRes> error(ResponseCode responseCode) {
-        return new ApiResponse<>(responseCode.getCode(), responseCode.getMessage(), new CommonEmptyRes());
+    public static ApiResponse<EmptyResponse> error(ResponseCode responseCode) {
+        return new ApiResponse<>(responseCode.getCode(), responseCode.getMessage(), new EmptyResponse());
     }
 
     /**

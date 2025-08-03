@@ -1,7 +1,7 @@
 package ex.sample.global.exception;
 
 import ex.sample.global.response.ApiResponse;
-import ex.sample.global.response.CommonEmptyRes;
+import ex.sample.global.response.EmptyResponse;
 import ex.sample.global.response.InvalidInputRes;
 import ex.sample.global.response.ResponseCode;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
      * Business 오류 발생에 대한 핸들러
      */
     @ExceptionHandler(GlobalException.class)
-    public ApiResponse<CommonEmptyRes> handleGlobalException(GlobalException e) {
+    public ApiResponse<EmptyResponse> handleGlobalException(GlobalException e) {
         response.setStatus(e.getResponseCode().getHttpStatus().value()); // HttpStatus 설정
 
         return ApiResponse.error(e.getResponseCode()); // 공통 응답 양식 반환
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
         MissingPathVariableException.class,
         MissingServletRequestParameterException.class
     })
-    public ApiResponse<CommonEmptyRes> handleGlobalException(Exception e) {
+    public ApiResponse<EmptyResponse> handleGlobalException(Exception e) {
         response.setStatus(ResponseCode.INVALID_INPUT.getHttpStatus().value()); // HttpStatus 설정
 
         return ApiResponse.error(ResponseCode.INVALID_INPUT); // 공통 응답 양식 반환
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
      * 예상치 못한 에러 발생에 대한 핸들러
      */
     @ExceptionHandler({Exception.class, RuntimeException.class})
-    public ApiResponse<CommonEmptyRes> handleException(Exception e) {
+    public ApiResponse<EmptyResponse> handleException(Exception e) {
         log.error("예상치 못한 에러 발생", e);
         response.setStatus(ResponseCode.SYSTEM_ERROR.getHttpStatus().value()); // HttpStatus 설정
 
