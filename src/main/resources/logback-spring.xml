@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+
+  <!--
+    Spring Boot의 application.yml 또는 application.properties에서
+    logging.file.name, logging.file.path 값을 가져와서 사용
+    예:
+      logging:
+        file:
+          name: myapp
+          path: /var/log/myapp
+    설정이 없을 경우 기본값(app, /var/log/app) 사용
+  -->
+  <springProperty name="LOG_FILE" source="logging.file.name" scope="context" defaultValue="app"/>
+  <springProperty name="LOG_PATH" source="logging.file.path" scope="context" defaultValue="/var/log/app"/>
+
+  <!--
+    파일 로그 Appender 설정
+    - 로그는 ${LOG_PATH}/${LOG_FILE}.log 에 기록됨
+    - Size + Time 기반의 롤링 정책을 적용하여,
+      날짜 단위로 디렉토리를 나누고, 하루 중 파일이 일정 크기 이상이면 분할 저장
+  -->
+  <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <!-- 현재 로그 파일 경로 -->
+    <file>${LOG_PATH}/${LOG_FILE}.log</file>
+
+    <!--
+      롤링 정책: Size + Time 기반
+      - 매일 날짜 기준으로 디렉토리를 구분하고
+      - 하루 동안 로그 크기가 100MB를 넘으면 .1, .2 순으로 파일이 분할됨
+    -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- 롤링 파일 이름 패턴 -->
+      <fileNamePattern>${LOG_PATH}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+      <!--
+        파일 하나당 최대 크기
+        - 초과하면 같은 날짜 내에서 .1, .2 ... 식으로 파일이 나뉨
+      -->
+      <maxFileSize>100MB</maxFileSize>
+
+      <!--
+        보관 주기
+        - 최근 30일치 로그만 유지
+      -->
+      <maxHistory>30</maxHistory>
+
+      <!--
+        전체 로그 파일의 총 용량 제한
+        - 10GB를 초과하면 가장 오래된 파일부터 삭제
+      -->
+      <totalSizeCap>10GB</totalSizeCap>
+    </rollingPolicy>
+
+    <!--
+      로그 출력 포맷
+      - %d : 날짜 시간 (밀리초까지)
+      - %thread : 쓰레드 이름
+      - %level : 로그 레벨 (INFO, ERROR 등)
+      - %logger{36} : 클래스 이름 (패키지 포함 최대 36자)
+      - %X{requestId} : MDC에 설정된 requestId (없으면 공백)
+      - %msg : 로그 메시지
+    -->
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{requestId}] [%X{clientIp}] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!--
+    콘솔 로그 Appender
+    - 로컬 개발 환경에서 표준 출력으로 로그를 보기 위함
+  -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--
+        콘솔에서도 동일하게 유지
+      -->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{requestId}] [%X{clientIp}] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!--
+    루트 로거 설정
+    - INFO 레벨 이상 로그만 출력됨 (INFO, WARN, ERROR)
+    - 로그는 파일과 콘솔 두 곳에 동시에 출력됨
+  -->
+  <root level="INFO">
+    <appender-ref ref="ROLLING_FILE"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>
