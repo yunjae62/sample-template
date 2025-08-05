@@ -63,7 +63,7 @@
       - %msg : 로그 메시지
     -->
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{requestId}] [%X{clientIp}] %msg%n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%replace(%X{requestId}){'^(.+)$',' [$1]'}%replace(%X{clientIp}){'^(.+)$',' [$1]'} %msg%n</pattern>
     </encoder>
   </appender>
 
@@ -76,7 +76,7 @@
       <!--
         콘솔에서도 동일하게 유지
       -->
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{requestId}] [%X{clientIp}] %msg%n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%replace(%X{requestId}){'^(.+)$',' [$1]'}%replace(%X{clientIp}){'^(.+)$',' [$1]'} %msg%n</pattern>
     </encoder>
   </appender>
 
