@@ -45,9 +45,9 @@
 | 분류         | 상세                                  |
 |------------|:------------------------------------|
 | IDE        | IntelliJ                            |
-| Language   | Java 17                             |
-| Framework  | Spring Boot 3.3.3                   |
-| Repository | PostgreSQL 16.4, H2 In-memory(Test) |
+| Language   | Java 21                             |
+| Framework  | Spring Boot 3.5.4                   |
+| Repository | PostgreSQL 17.5, H2 In-memory(Test) |
 | Build Tool | Gradle 8.8                          |
 | Infra      | EC2, Docker, Github Actions         |
 
@@ -60,12 +60,12 @@
 - Spring Security
 - Spring Data Jpa
 - Spring Data Redis
-- jjwt 0.12.5
-- QueryDSL 5.0.0
-- mapStruct 1.5.5.Final
+- jjwt 0.12.6
+- QueryDSL 5.1.0
+- mapStruct 1.6.3
 - Lombok
 - JUnit
-- Swagger 2.6.0
+- Swagger 2.8.9
 - Jacoco
 
 ## 🐰 프로젝트 상세
