@@ -1,6 +1,6 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.security.WebSecurityConfig;
+import ex.sample.global.security.config.UrlConstant;
 import ex.sample.infra.inmemory.InMemoryStore;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +34,6 @@ public class LogoutFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         // "/users/logout" URL이 아니라면 필터를 건너뜁니다.
-        return !request.getServletPath().equals(WebSecurityConfig.LOGOUT_URL);
+        return !request.getServletPath().equals(UrlConstant.LOGOUT_URL);
     }
 }

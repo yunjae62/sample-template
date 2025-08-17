@@ -1,7 +1,7 @@
 package ex.sample.global.security.filter;
 
-import ex.sample.global.security.WebSecurityConfig;
 import ex.sample.global.security.authentication.RefreshTokenAuthentication;
+import ex.sample.global.security.config.UrlConstant;
 import ex.sample.global.security.handler.RefreshSuccessHandler;
 import ex.sample.global.security.jwt.JwtConfig;
 import jakarta.servlet.FilterChain;
@@ -51,6 +51,6 @@ public class RefreshFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         // "/users/refresh" 경로가 아니라면 필터 로직을 수행하지 않음
-        return !request.getServletPath().equals(WebSecurityConfig.REFRESH_URL);
+        return !request.getServletPath().equals(UrlConstant.REFRESH_URL);
     }
 }

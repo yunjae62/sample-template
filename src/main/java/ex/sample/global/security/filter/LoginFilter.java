@@ -3,7 +3,7 @@ package ex.sample.global.security.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ex.sample.global.exception.GlobalException;
 import ex.sample.global.response.ResponseCode;
-import ex.sample.global.security.WebSecurityConfig;
+import ex.sample.global.security.config.UrlConstant;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @PostConstruct
     public void setup() {
         this.setAuthenticationSuccessHandler(loginSuccessHandler);
-        setFilterProcessesUrl(WebSecurityConfig.LOGIN_URL);
+        setFilterProcessesUrl(UrlConstant.LOGIN_URL);
     }
 
     @Override
