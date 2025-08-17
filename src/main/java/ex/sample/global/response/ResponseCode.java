@@ -40,6 +40,8 @@ public enum ResponseCode {
     EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "2005", "만료된 Access Token"),
     // 만료된 리프레쉬 토큰 401
     EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "2006", "만료된 Refresh Token"),
+    // 잘못된 로그인 정보 401
+    INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "2007", "이메일 또는 비밀번호가 올바르지 않습니다."),
     ;
 
     private final HttpStatus httpStatus; // 응답 상태 코드
