@@ -31,6 +31,19 @@ spring:
       stop:
         command: down
         timeout: 1m
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 10000
 
 jwt:
   secret:
