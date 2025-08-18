@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>메일 인증</title>
+</head>
+<body style="font-family: 'Noto Sans KR', Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; color: #333;">
+<div
+    style="max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <div style="text-align: center; padding: 20px 0; background-color: #007bff; color: #ffffff; border-radius: 8px 8px 0 0;">
+    <h1 style="margin: 0; font-size: 24px;">이메일 인증</h1>
+  </div>
+  <div style="padding: 20px; text-align: center;">
+    <p style="margin: 0 0 10px;">회원가입을 해주셔서 감사합니다.</p>
+    <p style="margin: 0 0 10px;">아래 메일 인증번호를 3분 내로 입력해주세요.</p>
+    <div
+        style="font-size: 28px; font-weight: bold; color: #007bff; margin: 20px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px; letter-spacing: 2px;"
+        th:text="${verificationCode}">
+    </div>
+    <p style="margin: 0;">감사합니다.</p>
+  </div>
+  <div style="text-align: center; padding: 20px; font-size: 12px; color: #666;">
+    <p style="margin: 0 0 10px;">본인이 요청한 메일이 아니라면 이 메일을 무시하셔도 됩니다.</p>
+  </div>
+</div>
+</body>
+</html>
