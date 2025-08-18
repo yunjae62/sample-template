@@ -23,6 +23,10 @@ public enum ResponseCode {
     SYSTEM_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "1003", "알 수 없는 에러가 발생했습니다."),
     // 잘못된 요청 400
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "1004", "잘못된 요청입니다."),
+    // 메일 전송 실패 503
+    MAIL_SEND_FAIL(HttpStatus.SERVICE_UNAVAILABLE, "1005", "메일 전송에 실패했습니다."),
+    // 잘못된 메일 주소 400
+    BAD_MAIL_ADDRESS(HttpStatus.BAD_REQUEST, "1006", "잘못된 메일 주소입니다."),
 
     /* 유저 2000번대 */
 
