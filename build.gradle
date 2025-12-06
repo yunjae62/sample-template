@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.4'
+    id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -10,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -36,10 +36,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // QueryDSL
-    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
-    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    implementation "io.github.openfeign.querydsl:querydsl-jpa-spring:7.1"
+    annotationProcessor "io.github.openfeign.querydsl:querydsl-apt:7.1:jpa"
 
     // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -65,12 +63,12 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
     // swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 
     // JWT
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    implementation 'io.jsonwebtoken:jjwt-api:0.13.0'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.13.0'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 
     // mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -83,16 +81,32 @@ dependencies {
 
     // Spring
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
     testImplementation 'org.springframework.security:spring-security-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-mail-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // test database
     testRuntimeOnly 'com.h2database:h2'
 
     // JWT
-    testCompileOnly 'io.jsonwebtoken:jjwt-api:0.12.6'
-    testCompileOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    testCompileOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    testCompileOnly 'io.jsonwebtoken:jjwt-api:0.13.0'
+    testCompileOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'
+    testCompileOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 }
 
 clean {
@@ -108,7 +122,6 @@ tasks.named('test') {
 jacocoTestReport {
     reports {
         // 리포트 타입마다 리포트 저장 경로를 설정할 수 있습니다.
-        html.destination file("jacoco/report")
     }
 
     // QueryDsl Q class 제외
