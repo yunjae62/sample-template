@@ -17,7 +17,7 @@ public abstract class JwtAuthentication extends AbstractAuthenticationToken {
      * 인증 전
      */
     protected JwtAuthentication(String token) {
-        super(null);
+        super((Collection<? extends GrantedAuthority>) null);
         this.token = token;
         this.principal = null;
         setAuthenticated(false);

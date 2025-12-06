@@ -22,7 +22,10 @@ public class ObjectMapperConfig {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         // null 필드 제외 (선택 사항)
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.setDefaultPropertyInclusion(JsonInclude.Value.construct(
+            JsonInclude.Include.NON_NULL, // 직렬화 시 포함할 기준
+            JsonInclude.Include.NON_NULL  // 역직렬화 시 포함할 기준 (보통 직렬화와 동일하게 설정)
+        ));
 
         // 알 수 없는 필드가 있어도 예외 발생하지 않음
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);

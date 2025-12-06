@@ -7,7 +7,7 @@ import ex.sample.global.security.filter.LogoutFilter;
 import ex.sample.global.security.filter.RefreshFilter;
 import ex.sample.global.security.jwt.JwtConfig;
 import java.util.List;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -74,6 +74,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
                 // Sample 도메인
                 .requestMatchers("/samples/**").permitAll()
+                .requestMatchers("/users/**").permitAll()
                 // 인증
                 .requestMatchers(HttpMethod.POST, UrlConstant.SIGNUP_URL, UrlConstant.REFRESH_URL).permitAll()
                 // 그 외
